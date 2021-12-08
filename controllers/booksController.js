@@ -5,12 +5,12 @@ router.get("/", async (req, res) => {
 
   return res.json(books);
 });
-router.get("/:id", async (req, res) => {
+router.get("/:bookId", async (req, res) => {
   try {
-    const book = await Book.findById(req.params.id);
-    res.json(book);
+    const book = await Book.findById(req.params.bookId);
+  return res.json(book);
   } catch (err) {
-    console.log(err);
+   res.status(400).json(err)
   }
 });
 router.post("/create", async (req, res) => {
