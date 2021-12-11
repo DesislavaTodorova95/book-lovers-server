@@ -9,5 +9,6 @@ const CommentShema = new mongoose.Schema({
     },
   ],
   addedAt: [{ type: Date, default: Date.now }],
+  bookId: [{type: mongoose.Schema.Types.ObjectId, ref: 'Book'}]
 });
 module.exports = mongoose.model('Comment', CommentShema)
