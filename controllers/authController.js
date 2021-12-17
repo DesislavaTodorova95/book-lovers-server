@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const { createUser, getUserByEmail } = require("../services/userServices");
 router.post("/login", async (req, res) => {
   try {
+  
     const { email, password } = req.body;
     if (!(email && password)) {
       res.status(400).json("All input is required");
@@ -26,6 +27,8 @@ router.post("/login", async (req, res) => {
         }
       );
       user.token = token;
+      req.user = ({email: user.email, token}) // changed
+      
       res.json({ userId: user._id, email: user.email, token });
     }
     res.status(400).json("Invalid Credentials");
@@ -79,7 +82,7 @@ router.post("/register", async (req, res) => {
     );
     // save user token
     user.token = token;
-
+    req.user = ({email: user.email, token})
     // return new user
     res.json({ userId: user._id, email: user.email, token });
   } catch (err) {

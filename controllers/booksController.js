@@ -2,14 +2,16 @@ const router = require("express").Router();
 const Book = require("../models/Book");
 const Comment = require('../models/Comment');
 router.get("/", async (req, res) => {
+  console.log(req.isAuth)
+  try{
   const books = await Book.find({});
-
- res.json(books);
+res.status(200).json(books);
+}catch(err){res.status(400).json(err)};
 });
 router.get("/:bookId", async (req, res) => {
   try {
     const book = await Book.findById(req.params.bookId);
-   res.json(book);
+   res.status(200).json(book);
   } catch (err) {
    res.status(400).json('thahts backednderror',err)
    throw new Error(err)
@@ -19,19 +21,22 @@ router.post("/create", async (req, res) => {
   const bookData = {
     title: req.body.title,
     author: req.body.author,
+    genre: req.body.genre,
     description: req.body.description,
     imageUrl: req.body.imageUrl,
-    addedBy: req.user._id,
+    addedBy: req.user.userId,
     likes: [],
     comments: [],
   };
+  console.log('create book', req.body)
+  
   try {
     const newBook = new Book(bookData);
     await newBook.save();
-    res.json(newBook);
+    res.status(200).json(newBook);
   } catch (error) {
     
-    res.json(error)
+    res.status(400).json(error)
   throw new Error(error);
   }
 });
@@ -43,9 +48,9 @@ router.post('/:bookId/comment', async(req,res)=>{
   }
   const comment = new Comment(commentData)
   await comment.save();
-  res.json(comment);
+  res.status(200).json(comment);
 }catch(error){
-  res.json(error)
+  res.status(400).json(error)
   throw new Error(error)}
 
   

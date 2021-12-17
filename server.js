@@ -14,8 +14,9 @@ const routesConfig = require("./config/routesConfig");
 async function start() {
   const app = express();
   await databaseConfig(app);
-  expressConfig(app)
-  routesConfig(app)
+  
+  expressConfig(app);
+  routesConfig(app);
   app.get("/", (req, res) => {
     res.json({ text: "hello" });
   });

@@ -8,6 +8,7 @@ const BookSchema = new mongoose.Schema({
     type: String,
     required: [true, "Author is required!"],
   },
+  genre:{type: String, required: true},
   description: {
     type: String,
     required: true,
@@ -26,6 +27,7 @@ const BookSchema = new mongoose.Schema({
       required: true,
     },
   ],
+ 
   comments:  [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Comment'
