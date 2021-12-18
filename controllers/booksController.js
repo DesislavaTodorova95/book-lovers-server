@@ -18,24 +18,34 @@ router.get("/:bookId", async (req, res) => {
   }
 });
 router.post("/create", async (req, res) => {
+  try {
+
+
+    
   const bookData = {
-    title: req.body.title,
-    author: req.body.author,
-    genre: req.body.genre,
-    description: req.body.description,
-    imageUrl: req.body.imageUrl,
-    addedBy: req.user.userId,
+    title: req.body.body.title,
+    author: req.body.body.author,
+    genre: req.body.body.genre,
+    description: req.body.body.description,
+    imageUrl: req.body.body.imageUrl,
+    addedBy: req.body.body.addedBy,
     likes: [],
     comments: [],
   };
-  console.log('create book', req.body)
+ console.log(bookData)
+  // if(!bookData.title || !bookData.author || !bookData.genre || !bookData.description || !bookData.imageUrl || !bookData.addedBy){
+  //   res.status(400).json('All fields are required');
+  //   throw new Error('All fields are required')
+  // }
+
+  console.log('create book', bookData)
   
-  try {
+  
     const newBook = new Book(bookData);
     await newBook.save();
     res.status(200).json(newBook);
   } catch (error) {
-    
+    console.log(error)
     res.status(400).json(error)
   throw new Error(error);
   }
@@ -51,7 +61,7 @@ router.post('/:bookId/comment', async(req,res)=>{
   res.status(200).json(comment);
 }catch(error){
   res.status(400).json(error)
-  throw new Error(error)}
+  throw new Error(error.message)}
 
   
 })

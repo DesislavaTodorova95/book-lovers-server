@@ -30,9 +30,11 @@ router.post("/login", async (req, res) => {
       req.user = ({email: user.email, token}) // changed
       
       res.json({ userId: user._id, email: user.email, token });
+    }else {
+      res.status(200).json('Invalid credentials');
+      throw new Error('invalid credentials')
     }
-    res.status(400).json("Invalid Credentials");
-    throw new Error("Invalid Credentials");
+   
   } catch (err) {
     res.status(400).json(err);
   }

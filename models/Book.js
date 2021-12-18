@@ -11,12 +11,12 @@ const BookSchema = new mongoose.Schema({
   genre:{type: String, required: true},
   description: {
     type: String,
-    required: true,
+    required: [true, "Genre is required!"],
     minlength: [20, "Description must be at least 20 sybmols long!"],
   },
   imageUrl: {
     type: String,
-    required: true,
+    required: [true, "ImageUrl is required!"],
     match: [/^https?/, "Image must be a valid url.."],
   },
   likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
