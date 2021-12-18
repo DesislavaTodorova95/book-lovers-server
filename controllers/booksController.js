@@ -50,6 +50,13 @@ router.post("/create", async (req, res) => {
   throw new Error(error);
   }
 });
+router.get('/delete/:bookId', async(req, res)=>{
+  try{
+await Book.findByIdAndDelete(req.params.bookId)
+res.status(200).json('BOOK DELETED');}catch(error){
+  res.status(400).json('Book cannot be deleted')
+}
+})
 router.post('/:bookId/comment', async(req,res)=>{
  try { const commentData = {
     content: req.body.content,
@@ -64,5 +71,6 @@ router.post('/:bookId/comment', async(req,res)=>{
   throw new Error(error.message)}
 
   
-})
+});
+
 module.exports = router;
