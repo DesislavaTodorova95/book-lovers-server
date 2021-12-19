@@ -5,6 +5,7 @@ const expressConfig = require('./config/expressConfig')
 const databaseConfig = require("./config/databaseConfig");
 const routesConfig = require("./config/routesConfig");
 
+
 //middleware
 
 //routes
@@ -16,12 +17,12 @@ async function start() {
   await databaseConfig(app);
   
   expressConfig(app);
-  routesConfig(app);
+ routesConfig(app);
   app.get("/", (req, res) => {
     res.json({ text: "hello" });
   });
   app.listen(PORT, () => {
-    console.group(`Server Listening on port ${PORT}...`);
+    console.log(`Server Listening on port ${PORT}...`);
   });
   
 }

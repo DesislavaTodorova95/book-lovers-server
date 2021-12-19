@@ -1,8 +1,11 @@
 const router = require("express").Router();
+
 const Book = require("../models/Book");
 const Comment = require('../models/Comment');
+
+
 router.get("/", async (req, res) => {
-  console.log(req.isAuth)
+ 
   try{
   const books = await Book.find({});
 res.status(200).json(books);
@@ -32,6 +35,7 @@ router.post("/create", async (req, res) => {
     likes: [],
     comments: [],
   };
+
  console.log(bookData)
   // if(!bookData.title || !bookData.author || !bookData.genre || !bookData.description || !bookData.imageUrl || !bookData.addedBy){
   //   res.status(400).json('All fields are required');
