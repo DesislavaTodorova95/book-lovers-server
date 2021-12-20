@@ -22,10 +22,8 @@ router.get("/:bookId", async (req, res) => {
 });
 router.post("/create", async (req, res) => {
   try {
-
-
-    
-  const bookData = {
+if(req.isAuth){
+const bookData = {
     title: req.body.body.title,
     author: req.body.body.author,
     genre: req.body.body.genre,
@@ -47,10 +45,15 @@ router.post("/create", async (req, res) => {
   
     const newBook = new Book(bookData);
     await newBook.save();
-    res.status(200).json(newBook);
+    res.status(200).json(newBook);}else {
+   console.log('not auto')
+     res.status(400).json('not authorized');
+    }
+
   } catch (error) {
-    console.log(error)
-    res.status(400).json(error)
+    
+   res.status(400).json(error)
+   
   throw new Error(error);
   }
 });
@@ -76,5 +79,30 @@ router.post('/:bookId/comment', async(req,res)=>{
 
   
 });
+router.post('/edit/:bookId', async(req, res)=>{
+  try{
+    console.log(req.body.body.title);
+    console.log(req.body.body.author);
+    console.log(req.body.body.genre);
+    console.log(req.body.body.description);
+    console.log(req.body.body.imageUrl);
+
+    if(!req.body.body.title || !req.body.body.author|| !req.body.body.genre || !req.body.body.description ||  !req.body.body.imageUrl){
+      
+      throw new Error('all fields are required!!!')
+    }
+  const bookForEdit = await Book.findById(req.params.bookId);
+  bookForEdit.title = req.body.body.title; 
+ bookForEdit.author= req.body.body.author;
+ bookForEdit.genre =req.body.body.genre;
+ bookForEdit.description= req.body.body.description; 
+ bookForEdit.imageUrl= req.body.body.imageUrl;
+ bookForEdit.save();
+ res.status(200).json(bookForEdit);
+}catch(error){
+  console.log('ohh noo ', error)
+
+res.status(400).json(error)
+}})
 
 module.exports = router;

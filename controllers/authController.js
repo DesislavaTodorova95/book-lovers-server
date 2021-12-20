@@ -17,6 +17,11 @@ router.post("/login", async (req, res) => {
       throw new Error("This must be a valid email");
     }
     const user = await getUserByEmail(email);
+   
+    // if(!user){
+    //   res.status(200).json('No such user');
+    //   throw new Error('No such user')
+    // }
 
     if (user && (await bcrypt.compare(password, user.hashedPassword))) {
       const token = jwt.sign(
@@ -31,8 +36,8 @@ router.post("/login", async (req, res) => {
       
       res.json({ userId: user._id, email: user.email, token });
     }else {
-      res.status(200).json('Invalid credentials');
-      throw new Error('invalid credentials')
+      res.status(400).json('There is no such user');
+      throw new Error('There is no such user')
     }
    
   } catch (err) {

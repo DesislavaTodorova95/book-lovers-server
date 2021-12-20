@@ -20,13 +20,13 @@ const BookSchema = new mongoose.Schema({
     match: [/^https?/, "Image must be a valid url.."],
   },
   likes: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
-  addedBy: [
+  addedBy: 
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
-  ],
+  
  
   comments:  [{
     type: mongoose.Schema.Types.ObjectId,
