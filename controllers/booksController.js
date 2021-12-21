@@ -2,6 +2,7 @@ const router = require("express").Router();
 
 const Book = require("../models/Book");
 const Comment = require('../models/Comment');
+const User = require("../models/User");
 
 
 router.get("/", async (req, res) => {
@@ -86,8 +87,14 @@ router.put('/like/:bookId', async(req, res)=>{
     if(req.body.body.userId){
       
   const likedBook =await Book.findById(req.params.bookId);
+
+  console.log('liked', likedBook)
   likedBook.likes.push(req.body.body.userId);
   likedBook.save();
+  const userLiked = await User.findById(req.body.body.userId);
+  console.log('likedUsers', userLiked)
+  userLiked.favouriteBooks.push(req.params.bookId);
+  userLiked.save();
   console.log(likedBook);
   res.status(200).json(likedBook);
 }else {console.log('no')}
@@ -118,6 +125,14 @@ router.put('/edit/:bookId', async(req, res)=>{
   console.log(error.message)
 
 res.status(400).json(error.message)
-}})
-
+}});
+router.get('/favourites/:userId', async(req,res)=>{
+  
+  try{
+    console.log('headersr', req.headers)
+    if(req.isAuth){
+ const favourites = await Book.find({likes: req.params.userId});
+ 
+ res.status(200).json(favourites);}else {throw new Error('notallowed')}}catch(error){res.status(400).json(error.message)}
+})
 module.exports = router;
