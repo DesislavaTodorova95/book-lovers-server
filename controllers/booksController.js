@@ -34,7 +34,7 @@ const bookData = {
     comments: [],
   };
 
- console.log(bookData)
+ 
   // if(!bookData.title || !bookData.author || !bookData.genre || !bookData.description || !bookData.imageUrl || !bookData.addedBy){
   //   res.status(400).json('All fields are required');
   //   throw new Error('All fields are required')
@@ -79,13 +79,26 @@ router.post('/:bookId/comment', async(req,res)=>{
 
   
 });
-router.post('/edit/:bookId', async(req, res)=>{
+router.put('/like/:bookId', async(req, res)=>{
+ 
   try{
-    console.log(req.body.body.title);
-    console.log(req.body.body.author);
-    console.log(req.body.body.genre);
-    console.log(req.body.body.description);
-    console.log(req.body.body.imageUrl);
+    console.log('req.body', req.body)
+    if(req.body.body.userId){
+      
+  const likedBook =await Book.findById(req.params.bookId);
+  likedBook.likes.push(req.body.body.userId);
+  likedBook.save();
+  console.log(likedBook);
+  res.status(200).json(likedBook);
+}else {console.log('no')}
+}catch(error){console.log(error);
+  res.status(400).json(error.message)}
+
+})
+router.put('/edit/:bookId', async(req, res)=>{
+  
+  try{
+ 
 
     if(!req.body.body.title || !req.body.body.author|| !req.body.body.genre || !req.body.body.description ||  !req.body.body.imageUrl){
       
@@ -98,11 +111,13 @@ router.post('/edit/:bookId', async(req, res)=>{
  bookForEdit.description= req.body.body.description; 
  bookForEdit.imageUrl= req.body.body.imageUrl;
  bookForEdit.save();
+ console.log(bookForEdit);
+
  res.status(200).json(bookForEdit);
 }catch(error){
-  console.log('ohh noo ', error)
+  console.log(error.message)
 
-res.status(400).json(error)
+res.status(400).json(error.message)
 }})
 
 module.exports = router;
