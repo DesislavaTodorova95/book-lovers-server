@@ -8,7 +8,7 @@ const UserSchema = new mongoose.Schema({
   hashedPassword: {
     type: String,
     minlength: [4, "password must be minimum 4 characters long"],
-    required: true,
+    required: [true, "Password is required!"],
   },
 
   favouriteBooks: [

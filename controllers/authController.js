@@ -7,8 +7,8 @@ router.post("/login", async (req, res) => {
   
     const { email, password } = req.body;
     if (!(email && password)) {
-      res.status(400).json("All input is required");
-      throw new Error("All input is required");
+      res.status(400).json("All inputs are required");
+      throw new Error("All inputs are required");
     }
     const emailPattern = /[a-zA-Z]+\@[a-zA-Z]+\.[a-zA-Z]+/g;
     const match = email.match(emailPattern);
@@ -36,8 +36,8 @@ router.post("/login", async (req, res) => {
       
       res.json({ userId: user._id, email: user.email, token });
     }else {
-      res.status(400).json('There is no such user');
-      throw new Error('There is no such user')
+      res.status(400).json('Wrong Email of Password');
+      throw new Error('Wrong Email of Password')
     }
    
   } catch (err) {
@@ -60,6 +60,10 @@ router.post("/register", async (req, res) => {
     if (!match) {
       res.status(400).json("This must be a valid email");
       throw new Error("This must be a valid email");
+    }
+    if(password.length <4){
+      res.status(400).json("Passwords must be at least 4 characters long");
+      throw new Error("Passwords must be at least 4 characters long");
     }
     if (password !== rePass) {
       res.status(400).json("Passwords dont match");
