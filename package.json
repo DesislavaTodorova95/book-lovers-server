@@ -2,11 +2,12 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "engines": {"node": "14.13.0.x"},
+  "engines": {"node": "14.13.0",
+  "npm":"6.14.15"},
   "main": "index.js",
   "proxy": "http://localhost:3000",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "node server.js"
   },
   
   "keywords": [],
