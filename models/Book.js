@@ -11,7 +11,7 @@ const BookSchema = new mongoose.Schema({
   genre:{type: String, required: true},
   description: {
     type: String,
-    required: [true, "Genre is required!"],
+    required: [true, "Description is required!"],
     minlength: [20, "Description must be at least 20 sybmols long!"],
   },
   imageUrl: {

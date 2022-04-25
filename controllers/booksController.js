@@ -25,12 +25,12 @@ router.post("/create", async (req, res) => {
   try {
 if(req.isAuth){
 const bookData = {
-    title: req.body.body.title,
-    author: req.body.body.author,
-    genre: req.body.body.genre,
-    description: req.body.body.description,
-    imageUrl: req.body.body.imageUrl,
-    addedBy: req.body.body.addedBy,
+    title: req.body.title,
+    author: req.body.author,
+    genre: req.body.genre,
+    description: req.body.description,
+    imageUrl: req.body.imageUrl,
+    addedBy: req.body.addedBy,
     likes: [],
     comments: [],
   };
