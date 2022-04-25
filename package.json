@@ -2,7 +2,9 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "engines": {"node": "14.x",
+  "engines": {
+    "node": "0.10.x",
+ 
   "npm":"6.x"},
   "main": "index.js",
   "proxy": "http://localhost:3000",
